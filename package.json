@@ -1,0 +1,21 @@
+{
+  "name": "films_repository",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunnyjake"
+  },
+  "author": "sunnyjake",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.9",
+    "mongoose": "^4.6.0",
+    "path": "^0.12.7"
+  }
+}
