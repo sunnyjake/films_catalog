@@ -4,14 +4,44 @@
     <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap-theme.css">    
+    <link rel="stylesheet" href="/css/style.css">
     <script src="/jquery/dist/jquery.js"></script>
     <!--<script src="/js/index.js"></script>-->
-    <script src="/angular/angular.js"></script>
-    <script src="/js/controller.js"></script>
 </head>
-<body ng-app="app" ng-controller="MainController">
-    <div class="jumbotron">
-        Hello
+<body ng-app="app">
+    <div class="jumbotron header">
+        <h3 class="text-center header_title">My films database</h3>
+        <div class="additional">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                     <label for="search">
+                        Search film by name:
+                    </label>
+                    <input type="text" id="searchByFilm" placeholder="Film name" class="form-control">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label for="search">
+                        Search film by actor name:
+                    </label>
+                    <input type="text" id="searchByActor" placeholder="Actor name" class="form-control">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label for="search">
+                        Sort films by:
+                    </label><br>
+                    <select id="sortBy" class="form-control">
+                        <option hidden>Sort by</option>
+                        <option value="1">ASC</option>
+                        <option value="2">DESC</option>
+                    </select>
+                </div>
+            </div>
+            <div class="arrow">
+                <span></span>
+                <span></span>                
+            </div>
+        </div>
     </div>
     <div class="container">
         <label for="filmNmae">Film name:</label>
@@ -20,8 +50,24 @@
         <input type="text" id="year" ng-model="year">
         <input type="button" id="send" class="btn btn-sm btn-primary" value="Write film" ng-click="writeFilm()">
     </div>
-    <div class="container" id="filmsContent">
-        
+    <div class="container" id="filmsContent" ng-controller="MainController">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="film in films">
+                <div class="img_wrapper">
+                    <img ng-src={{film.image}} alt="title">
+                </div>
+                <h4 class="text-center">
+                    {{film.name}}, ({{film.year}})
+                </h4>
+                <p>
+                    <a href="#" ng-repeat="actor in film.actors">
+                        {{actor}},
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
+<script src="/angular/angular.js"></script>
+<script src="/js/controller.js"></script>
 </body>
 </html>

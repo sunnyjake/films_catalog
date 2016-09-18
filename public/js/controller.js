@@ -23,5 +23,23 @@ angular.module("app",[])
             .catch(function(error){
                 console.log(error);
             });
-        }
+        };
+
+        $scope.films = [];
+        $scope.getAllFims = function(){
+            $http({
+                url: "/all"
+            })
+            .then(function(response){
+                // console.log(response);
+                for(var i = 0; i < response.data.length; i++){
+                    $scope.films.push(response.data[i]);
+                }
+                console.log($scope.films);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        };
+        $scope.getAllFims();
     })
