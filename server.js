@@ -50,10 +50,11 @@ module.exports = Film;
 
 //create film and save it to database
 
-var film2 = new Film({
-    name: "Rocky II",
-    year:"1980",
-    actors:["Sylvester Stallone", "Talia Shire", "Burt Young"]
+var film1 = new Film({
+    name: "Rocky",
+    year:"1976",
+    actors:["Sylvester Stallone", "Talia Shire", "Burt Young"],
+    image: "/img/rocky.jpg"
 });
 // film1.generateId();
 // console.log(film1);

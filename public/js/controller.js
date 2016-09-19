@@ -1,5 +1,19 @@
-angular.module("app",[])
+angular.module("app",[
+    'ui.bootstrap'
+])
 
+    .factory("modalFactory", function($uibModal){
+        return {
+            open: function(template, controller, resolve){
+                return $uibModal.open({
+                    animation: true,
+                    templateUrl: template,
+                    controller: controller,
+                    resolve: resolve
+                });
+            }
+        };
+    })
     .controller("MainController",function($scope, $http){
         $scope.filmName;
         $scope.year;
@@ -42,4 +56,17 @@ angular.module("app",[])
             });
         };
         $scope.getAllFims();
+    })
+    .controller("ModalController", function($scope, $uibModalInstance, modalFactory){
+        modalFactory.open(
+            "modal_instance.html",
+            "ModalController"
+        );
+        $scope.ok = function () {
+            $uibModalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
     })

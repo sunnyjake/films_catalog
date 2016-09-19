@@ -23,8 +23,51 @@ body{
     right: 0;
     text-align: center;
     padding: 15px;
-    border: 1px solid red;
     top: 0;
+
+    box-shadow: 0 0 10px #ccc;
+    border-radius: 3px;
+    top: 100px;
+    /* width: 0; */
+    padding-left: 30px;
+    color: #ccc;
+    text-shadow: 0 0 15px #ccc;
+    /*width: 300px;*/
+    background: #000000;
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*text-align: center;*/
+    /*padding: 15px;*/
+    /*top: 0;*/
+    box-shadow: 0 0 10px #4F8FFF;
+    border-radius: 15px 0 0 15px;
+    /*top: 100px;*/
+    /* width: 0; */
+    /*padding-left: 50px;*/
+    width: 30px;
+    height: 430px;
+}
+.header .additional .row{
+    display: none;
+}
+.header .additional .row div{
+    padding: 30px 30px 0 30px;
+}
+.arrow_{
+    width: 30px;
+    height: 30px;
+    /* background: #ccc; */
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    margin-top: -15px;
+    border: 15px solid transparent;
+    border-right: 20px solid #fff;
+    cursor: pointer;
+    transition: border-right 0.25s;
+}
+.add_button, .add_title{
+    display: inline-block;
 }
 .arrow{
     height: 30px;
