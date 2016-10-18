@@ -1,5 +1,5 @@
 angular.module("app",[
-    'ui.bootstrap'
+    // 'ui.bootstrap
 ])
 
     .factory("modalFactory", function($uibModal){
