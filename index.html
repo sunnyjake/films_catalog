@@ -14,22 +14,26 @@
 <body ng-app="app" ng-controller="MainController">
     <div class="jumbotron header">
         <h3 class="text-center header_title">My films database</h3>
+        <div class="arrows">
+            <span></span>
+            <span></span>
+        </div>
         <div class="additional">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                     <label for="search">
+                     <label for="searchByFilm">
                         Search film by name:
                     </label>
                     <input type="text" id="searchByFilm" placeholder="Film name" class="form-control">
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <label for="search">
+                    <label for="searchByActor">
                         Search film by actor name:
                     </label>
                     <input type="text" id="searchByActor" placeholder="Actor name" class="form-control">
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <label for="search">
+                    <label for="sortBy">
                         Sort films by:
                     </label><br>
                     <select id="sortBy" class="form-control">
@@ -56,15 +60,88 @@
         </div>
     </div>-->
     <div class="container">
-        <label for="filmNmae">Film name:</label>
-        <input type="text" id="filmName" ng-model="filmName">
-        <label for="year">Year:</label>
-        <input type="text" id="year" ng-model="year">
-        <input type="button" id="send" class="btn btn-sm btn-primary" value="Write film" ng-click="writeFilm()">
-    </div>
-    <div class="container" id="filmsContent" >
         <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="film in films">
+            <ul class="nav nav-pills nav-justified">
+                <li ng-click="tab = 1" ng-class="{'active' : tab === 1}">
+                    <a>Add film</a>
+                </li>
+                <li ng-click="tab = 2" ng-class="{'active' : tab === 2}">
+                    <a>Sort by</a>
+                </li>
+                <li ng-click="tab = 3" ng-class="{'active' : tab === 3}">
+                    <a>Search film</a>
+                </li>
+            </ul>
+        </div>
+        <form ng-show="tab===1">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label for="filmName">Film name:</label>
+                        <input class="form-control" type="text" id="filmName" ng-model="filmName">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label for="year">Year:</label>
+                        <input class="form-control" type="text" id="year" ng-model="year">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label for="actors">Actors:</label>
+                        <input class="form-control" type="text" id="actors" ng-model="actors">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label for="image">Poster:</label>
+                        <br>
+                        <label for="image">
+                            <div class="btn btn-md btn-success">Add poster</div>
+                        </label>
+                        <input type="file" class="hidden" id="image" fileread="image">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="button" id="send" class="btn btn-sm btn-primary" value="Write film" ng-click="writeFilm()">
+            </div>
+        </form>
+        <div class="row" ng-show="tab === 2">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="sortFilms">Sort films by:</label>
+                    <select class="form-control" name="sort" id="sortFilms">
+                        <option selected hidden>Sort by</option>
+                        <option>Name (ASC)</option>
+                        <option>Name (DESC)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="tab === 3">
+            <div class="col-xs-12">
+                <label for="searchFilm">Search film by:</label>
+                <div class="form-group">
+                    <select class="form-control" name="search" id="searchFilm">
+                        <option selected hidden>Search by</option>
+                        <option>film name</option>
+                        <option>actor name</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="filmNameSearch">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="filmsContent">
+        <div class="row">
+            <!--<div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="film in films | filter: filmNameSearch.name">-->
+            <div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="film in films | searchFor: filmNameSearch">
                 <div class="img_wrapper">
                     <img ng-src={{film.image}} alt="title">
                 </div>
@@ -73,7 +150,7 @@
                 </h4>
                 <p>
                     <a href="#" ng-repeat="actor in film.actors">
-                        {{actor}},
+                        {{actor}}
                     </a>
                 </p>
             </div>

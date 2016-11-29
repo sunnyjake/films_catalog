@@ -1,6 +1,15 @@
 body{
     color:green;
 }
+a, a:visited{
+    color: blue;
+}
+/*label{*/
+    /*width: 75px;*/
+/*}*/
+.additional label{
+    width: auto;
+}
 .header{
     background: url('http://freshfilmsfest.net/wp-content/uploads/2016/07/Film.jpg') no-repeat;
     background-size: cover;

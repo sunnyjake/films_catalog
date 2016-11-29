@@ -3,6 +3,8 @@ var app = express();
 var fs = require("fs");
 var path = require("path");
 var mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+var multer = require("multer");
 
 //test
 // var MongoClient = require("mongodb").MongoClient;
@@ -58,14 +60,14 @@ var film1 = new Film({
 });
 // film1.generateId();
 // console.log(film1);
-// film2.save(function(err){
+// film1.save(function(err){
 //     if(err) throw err;
 //     console.log("Film saved");
 // });
 
 Film.find({}, function(err, film){
     if(err) throw err;
-    console.log(film);
+    // console.log(film);
     // film[0].image = "/img/rocky2.jpg";
     // film[0].save(function(err){
     //     if(err) throw err;
@@ -73,7 +75,7 @@ Film.find({}, function(err, film){
     // });
 });
 
-
+var jsonParser = bodyParser.json();
 //base request
 app.get("/", function(request, response){
     response.sendFile(path.join(__dirname.concat("/index.html")));
@@ -90,15 +92,49 @@ app.get("/", function(request, response){
         response.end(JSON.stringify(responseBody));
     });    
 })
-.get("/addFilm", function(request, response){
-    console.log(request);
-    var responseBody = {
-        name: request.query.name,
-        year: request.query.year
-    }
-    console.log(responseBody);
-    response.end(JSON.stringify(responseBody));
+    .post("/addFilm", jsonParser, function(request, response){
+        // console.log(request.body);
+        var fileName = request.body.name.replace(/ /g, '_')+".jpg";
+        var file = new Buffer(request.body.image.slice("data:image/jpeg;base64,".length), 'base64');
+        // var file = new Buffer(request.body.image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)[2], 'base64');
+        function writeFilm() {
+            var film = new Film({
+                name: request.body.name,
+                year: request.body.year,
+                actors: request.body.actors.split(','),
+                image: 'upload/'+fileName
+            });
+            fs.writeFile('public/upload/'+fileName, file, function(err){
+                if(err) {
+                    response.end("fail");
+                    throw err;
+                }
+                console.log("file saved");
+            });
+            film.save(function (err) {
+                if(err){
+                    response.end("fail");
+                    throw err;
+                }
+                console.log("film saved");
+            });
+            response.end("success");
+        }
+        writeFilm();
 
-}).listen(8080, function(){
+        // response.send(JSON.stringify(request.body));
+
+    })
+// .get("/addFilm", function(request, response){
+//     console.log(request);
+//     var responseBody = {
+//         name: request.query.name,
+//         year: request.query.year
+//     };
+//     console.log(responseBody);
+//     response.end(JSON.stringify(responseBody));
+//
+// })
+    .listen(8080, function(){
     console.log("Server is running on 8080");
 });
